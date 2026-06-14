@@ -9,6 +9,14 @@ import (
 	"log"
 )
 
+func getEightBitRGB(r16 uint32, g16 uint32, b16 uint32) (uint8, uint8, uint8) {
+	r8 := uint8(r16 >> 8)
+	g8 := uint8(g16 >> 8)
+	b8 := uint8(b16 >> 8)
+
+	return r8, g8, b8
+}
+
 func OutlineImage(path string) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -24,9 +32,6 @@ func OutlineImage(path string) {
 	x, y := 10, 20
 	r16, g16, b16, _ := img.At(x, y).RGBA()
 
-	// 5. Convert 16-bit channels to standard 8-bit values (0-255)
-	r8 := uint8(r16 >> 8)
-	g8 := uint8(g16 >> 8)
-	b8 := uint8(b16 >> 8)
+	r8, g8, b8 := getEightBitRGB(r16, g16, b16)
 	fmt.Println(r8, g8, b8)
 }
